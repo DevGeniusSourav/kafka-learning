@@ -6,13 +6,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderProducer {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
 
-    public OrderProducer(KafkaTemplate<String, String> kafkaTemplate) {
+    public OrderProducer(KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void publishOrderCreated(String orderId) {
-        kafkaTemplate.send("order-events-demo", orderId, "created");
+        OrderCreatedEvent event = new OrderCreatedEvent(
+                orderId,
+                "created"
+        );
+
+        kafkaTemplate.send("order-events-demo", orderId, event);
     }
 }

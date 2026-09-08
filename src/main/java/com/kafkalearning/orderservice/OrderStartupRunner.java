@@ -14,7 +14,8 @@ public class OrderStartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        orderProducer.publishOrderCreated("order-121");
+        orderProducer.publishOrderCreated("order-307");
+//        orderProducer.publishOrderCreated("order-306");
 //        orderProducer.publishOrderCreated("order-111");
 //        orderProducer.publishOrderCreated("order-112");
 //        orderProducer.publishOrderCreated("order-113");
