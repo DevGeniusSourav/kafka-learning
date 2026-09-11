@@ -20,13 +20,17 @@ public class OrderConsumer {
     public void consume(
             ConsumerRecord<String, OrderCreatedEvent> record,
             Acknowledgment acknowledgment
-    ) {
+    ) throws InterruptedException {
+
+//        Thread.sleep(3000);
         OrderCreatedEvent event = record.value();
 
-        String eventId = event.orderId() + "-" + event.status();
+        String eventId = event.eventId();
 
-        if ("order-307".equals(event.orderId())) {
-            throw new RuntimeException("Simulated processing failure");
+        if (processedEvents.contains(eventId)) {
+            System.out.println("Duplicate event ignored: " + eventId);
+            acknowledgment.acknowledge();
+            return;
         }
 
         System.out.println("Sending notification for " + event.orderId());

@@ -1,7 +1,9 @@
 package com.kafkalearning.orderservice;
 
 public record OrderCreatedEvent(
+        String eventId,
         String orderId,
-        String status
+        String status,
+        Double amount
 ) {
 }
